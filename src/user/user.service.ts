@@ -12,7 +12,7 @@ export class UserService {
   }
 
   findAll() {
-    console.log(this.configService.get('SOME'));
+    console.log(this.configService.get('DATABASE_PORT'), process.env.NODE_ENV);
     return `This action returns all user`;
   }
 
