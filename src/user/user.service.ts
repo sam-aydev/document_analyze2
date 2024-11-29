@@ -2,24 +2,28 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ConfigService } from '@nestjs/config';
+import { CreateUserService } from './providers/create-user.service';
+import { FindOneUser } from './providers/find-one-user.service';
+import { FindAllUsers } from './providers/find-all.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly configService: ConfigService) {}
-  create(createUserDto: CreateUserDto) {
-    console.log(this.configService.get('SOME'));
-    return ` This action adds a new user`;
+  constructor(
+    private readonly createUserService: CreateUserService,
+    private readonly findOneUser: FindOneUser,
+    private readonly findAllUser: FindAllUsers,
+  ) {}
+  public async create(createUserDto: CreateUserDto) {
+    return await this.createUserService.createUser(createUserDto);
   }
 
-  findAll() {
-    console.log(this.configService.get('DATABASE_PORT'), process.env.NODE_ENV);
-    return `This action returns all user`;
+  public async findOne(createUserDto: CreateUserDto) {
+    return await this.findOneUser.findOneUser(createUserDto);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  public async findAll() {
+    return await this.findAllUser.findAll();
   }
-
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
