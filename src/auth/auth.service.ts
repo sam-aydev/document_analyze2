@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -7,10 +8,17 @@ import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UserService } from 'src/user/user.service';
 import { SignInDto } from './dto/signin.dto';
 import { verify } from 'argon2';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigType } from '@nestjs/config';
+import jwtConfig from './config/jwt.config';
+import { SignInProvider } from './providers/sign-in.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly signInService: SignInProvider,
+  ) {}
 
   public async newUserAuth(createUserDto: CreateUserDto) {
     const existingUser = await this.userService.findOne(createUserDto);
@@ -19,14 +27,6 @@ export class AuthService {
   }
 
   public async logIn(signInDto: SignInDto) {
-    let isUser: boolean = false;
-
-    const user = await this.userService.findOne(signInDto);
-    if (!user) throw new ConflictException('User does not exist!');
-    isUser = await verify(user.password, signInDto.password);
-
-    if (!isUser) throw new UnauthorizedException('Incorrect password!');
-    console.log(isUser, user);
-    return user;
+    return await this.signInService.signIn(signInDto);
   }
 }
