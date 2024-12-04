@@ -9,6 +9,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import databaseConfig from './config/database.config';
 import appConfig from './config/app.config';
 import { User } from './user/entities/user.entity';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthenticationGuard } from './auth/guards/authentication/authentication.guard';
+import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
+import jwtConfig from './auth/config/jwt.config';
+import { JwtModule } from '@nestjs/jwt';
 
 const ENV = process.env.NODE_ENV;
 const path = !ENV ? '.env' : `.env.${ENV}`;
@@ -19,6 +24,8 @@ const path = !ENV ? '.env' : `.env.${ENV}`;
     AuthModule,
     UserModule,
     TypeOrmModule.forFeature([User]),
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env.development'],
@@ -41,6 +48,13 @@ const path = !ENV ? '.env' : `.env.${ENV}`;
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthenticationGuard,
+    },
+    AccessTokenGuard,
+  ],
 })
 export class AppModule {}
