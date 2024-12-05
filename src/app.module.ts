@@ -14,6 +14,7 @@ import { AuthenticationGuard } from './auth/guards/authentication/authentication
 import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
 import jwtConfig from './auth/config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
+import { DocumentModule } from './document/document.module';
 
 const ENV = process.env.NODE_ENV;
 const path = !ENV ? '.env' : `.env.${ENV}`;
@@ -46,6 +47,7 @@ const path = !ENV ? '.env' : `.env.${ENV}`;
         database: configService.get('database.name'),
       }),
     }),
+    DocumentModule,
   ],
   controllers: [AppController],
   providers: [
