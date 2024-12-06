@@ -10,17 +10,19 @@ import { AuthType } from './enums/auth-type.enum';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Auth(AuthType.None)
   @Post('signup')
   registerUser(@Body() createUserDto: CreateUserDto) {
     return this.authService.newUserAuth(createUserDto);
   }
 
+  @Auth(AuthType.None)
   @Post('login')
   loginUser(@Body() signInDto: SignInDto) {
     return this.authService.logIn(signInDto);
   }
 
-  @Auth(AuthType.None)
+  @Auth(AuthType.Bearer)
   @Get('xup')
   getUser() {
     return 'hello';

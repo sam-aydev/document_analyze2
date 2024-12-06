@@ -17,7 +17,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { DocumentModule } from './document/document.module';
 
 const ENV = process.env.NODE_ENV;
-const path = !ENV ? '.env' : `.env.${ENV}`;
+// const path = !ENV ? '.env' : `.env.${ENV}`;
 
 @Module({
   imports: [
