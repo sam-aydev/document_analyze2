@@ -15,6 +15,7 @@ import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard'
 import jwtConfig from './auth/config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
 import { DocumentModule } from './document/document.module';
+import { Document } from './document/entities/document.entity';
 
 const ENV = process.env.NODE_ENV;
 // const path = !ENV ? '.env' : `.env.${ENV}`;
@@ -37,7 +38,7 @@ const ENV = process.env.NODE_ENV;
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        entities: [User],
+        entities: [User, Document],
         synchronize: configService.get('database.synchronize'),
         autoLoadEntities: configService.get('database.autoLoadEntities'),
         port: +configService.get('database.port'),
