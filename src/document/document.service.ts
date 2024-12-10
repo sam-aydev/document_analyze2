@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
-import { GoogleDriveProvider } from './providers/google-drive.provider';
+import { GoogleDriveProvider } from './providers/upload-file.service';
 
 @Injectable()
 export class DocumentService {

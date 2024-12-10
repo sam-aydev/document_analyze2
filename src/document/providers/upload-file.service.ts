@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Document } from "../entities/document.entity"
 
 @Injectable()
-export class GoogleDriveProvider {
+export class UploadFileProvider {
   constructor(
     @InjectRepository(Document)
     private readonly documentRepository: Repository<Document>,
