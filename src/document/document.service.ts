@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
+import { GoogleDriveProvider } from './providers/google-drive.provider';
 
 @Injectable()
 export class DocumentService {
-  create(createDocumentDto: CreateDocumentDto) {
-    return 'This action adds a new document';
+  constructor(private readonly googleDriveProvider: GoogleDriveProvider) {}
+  public async uploadFile(createDocumentDto: CreateDocumentDto) {
+    return await this.googleDriveProvider.uploadFileToDrive(createDocumentDto);
   }
 
   findAll() {
