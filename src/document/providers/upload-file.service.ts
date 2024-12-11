@@ -13,7 +13,7 @@ export class UploadFileProvider {
   ) {
   }
 
-  async uploadFileToDrive(createDocumentDto: CreateDocumentDto) {
+  public async uploadFileToDrive(createDocumentDto: CreateDocumentDto) {
    
   }
 }

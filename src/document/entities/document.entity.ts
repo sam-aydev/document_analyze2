@@ -1,5 +1,6 @@
 import { User } from 'src/user/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { documentTypes } from '../enums/document-types.enum';
 
 @Entity()
 export class Document {
@@ -8,21 +9,38 @@ export class Document {
 
   @Column({
     type: 'varchar',
-    length: 100,
+    length: 1024,
+    nullable: false
   })
-  documentName: string;
+  name: string;
 
   @Column({
     type: 'varchar',
-    length: 512,
+    length: 1024,
+    nullable: false
   })
   path: string;
 
   @Column({
+    type: 'enum',
+    enum: documentTypes,
+    default: documentTypes.PDF,
+    nullable: false
+  })
+  type: string
+
+  @Column({
     type: 'varchar',
-    length: 100,
+    length: 1024,
+    nullable: false
   })
   mimeType: string;
+
+  @CreateDateColumn()
+  createDate: Date;
+
+  @UpdateDateColumn()
+  updateDate: Date
 
   @ManyToOne(() => User, (user) => user.documents)
   author: User;
