@@ -3,12 +3,12 @@ import { DocumentService } from './document.service';
 import { DocumentController } from './document.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Document } from './entities/document.entity';
-import { GoogleDriveProvider } from './providers/upload-file.service';
-import { ExtractTextProviderService } from './providers/extract-text.service';
+import { UploadFileProvider } from './providers/upload-file.service';
+import { ExtractTextService } from './providers/extract-text.service';
 
 @Module({
   controllers: [DocumentController],
-  providers: [DocumentService, GoogleDriveProvider, ExtractTextProviderService],
+  providers: [DocumentService, UploadFileProvider, ExtractTextService],
   imports: [TypeOrmModule.forFeature([Document])],
 })
 export class DocumentModule {}

@@ -36,6 +36,13 @@ export class Document {
   })
   mimeType: string;
 
+  @Column({
+    type: 'numeric',
+    length: 1024,
+    nullable: false
+  })
+  size: number
+
   @CreateDateColumn()
   createDate: Date;
 

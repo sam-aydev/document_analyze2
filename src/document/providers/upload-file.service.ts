@@ -33,8 +33,9 @@ export class UploadFileProvider {
       Key: `${name}-${timestamp}-${uuid4()}${extension}`,
       ContentType: file.mimetype
     }).promise()
-return uploadRes.Key
-   
+    
+    return uploadRes.Key
+    
   }
 
  

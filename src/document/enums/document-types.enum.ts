@@ -1,4 +1,4 @@
 export enum documentTypes{
     PDF="pdf",
-    DOCX="docx"
+    DOCX="doc"
 }
